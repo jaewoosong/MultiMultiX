@@ -14,12 +14,15 @@ namespace MultiMultiX
             InitializeComponent();
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
-            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
-            backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
-            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
+            backgroundWorker1.DoWork += new DoWorkEventHandler(BackgroundWorker1_DoWork);
+            backgroundWorker1.ProgressChanged += new ProgressChangedEventHandler(BackgroundWorker1_ProgressChanged);
+            backgroundWorker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundWorker1_RunWorkerCompleted);
+            trackBar1.Value = mJpgQuality;
+            lbQualityValue.Text = trackBar1.Value.ToString();
         }
 
         private string[] mJpgFiles;
+        private int mJpgQuality = 95;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -106,7 +109,7 @@ namespace MultiMultiX
             }
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             // Get the BackgroundWorker that raised this event.
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -125,13 +128,13 @@ namespace MultiMultiX
         }
 
         // This event handler updates the progress.
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BackgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             this.progressBar1.Value = e.ProgressPercentage;
         }
 
         // This event handler deals with the results of the background operation.
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled == true)
             {
@@ -205,9 +208,35 @@ namespace MultiMultiX
             resultBitmap.UnlockBits(bmpData);
 
 
+            // JPEG quality setting (System default was 75)
+            ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+            Encoder myEncoder = Encoder.Quality;
+            EncoderParameters myEncoderParameters = new EncoderParameters(1);
+            EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, mJpgQuality);
+            myEncoderParameters.Param[0] = myEncoderParameter;
+
             // Save
-            resultBitmap.Save(FileName, ImageFormat.Jpeg);
+            resultBitmap.Save(FileName, jpgEncoder, myEncoderParameters);
             resultBitmap.Dispose();            
+        }
+
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            lbQualityValue.Text = trackBar1.Value.ToString();
+            mJpgQuality = trackBar1.Value;
         }
     }
 }

@@ -39,6 +39,10 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.lbQuality = new System.Windows.Forms.Label();
+            this.lbQualityValue = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSelectDir
@@ -53,7 +57,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(233, 11);
+            this.btnRun.Location = new System.Drawing.Point(183, 11);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(107, 23);
             this.btnRun.TabIndex = 1;
@@ -101,18 +105,18 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(353, 14);
+            this.radioButton1.Location = new System.Drawing.Point(303, 14);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(125, 16);
+            this.radioButton1.Size = new System.Drawing.Size(141, 16);
             this.radioButton1.TabIndex = 2;
             this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "밝기 정규화 (권장)";
+            this.radioButton1.Text = "밝기 균등 분배 (권장)";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(353, 36);
+            this.radioButton2.Location = new System.Drawing.Point(303, 36);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(75, 16);
             this.radioButton2.TabIndex = 3;
@@ -135,12 +139,42 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "사용법: 같은 크기의 사진을 한 폴더에 모은 뒤 그 폴더를 선택해주세요.";
             // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(456, 58);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(159, 45);
+            this.trackBar1.TabIndex = 10;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // lbQuality
+            // 
+            this.lbQuality.AutoSize = true;
+            this.lbQuality.Location = new System.Drawing.Point(454, 38);
+            this.lbQuality.Name = "lbQuality";
+            this.lbQuality.Size = new System.Drawing.Size(33, 12);
+            this.lbQuality.TabIndex = 11;
+            this.lbQuality.Text = "화질:";
+            // 
+            // lbQualityValue
+            // 
+            this.lbQualityValue.AutoSize = true;
+            this.lbQualityValue.Location = new System.Drawing.Point(493, 38);
+            this.lbQualityValue.Name = "lbQualityValue";
+            this.lbQualityValue.Size = new System.Drawing.Size(17, 12);
+            this.lbQualityValue.TabIndex = 12;
+            this.lbQualityValue.Text = "95";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 147);
+            this.Controls.Add(this.lbQualityValue);
+            this.Controls.Add(this.lbQuality);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lbNumFiles);
@@ -154,6 +188,7 @@
             this.Name = "Form1";
             this.Text = "다중 노출 제작 프로그램 v0.1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,6 +207,9 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Label lbQuality;
+        private System.Windows.Forms.Label lbQualityValue;
     }
 }
 

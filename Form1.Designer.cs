@@ -186,7 +186,7 @@
             this.Controls.Add(this.lbTitle1);
             this.Controls.Add(this.btnSelectDir);
             this.Name = "Form1";
-            this.Text = "다중 노출 제작 프로그램 v0.1";
+            this.Text = "다중 노출 제작 프로그램 v0.2";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
